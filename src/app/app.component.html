@@ -1,0 +1,135 @@
+<h2 class='text-center text-2xl my-5'><span class='font-semibold text-blue-500'>G</span>estion de <span class='font-semibold text-green-500'>S</span>colarite</h2>
+<div class='flex justify-between w-11/12 mx-auto'>
+    <div class='form border shadow-xl w-full'>
+        <form action=""  [formGroup]="studentForm" (ngSubmit)="addOrEditStudent()">
+          <h3 class='text-center text-2xl my-5'><span class='font-semibold text-blue-500'>F</span>iche d'<span class='font-semibold text-green-500'>I</span>nscription</h3>
+          <input type="hidden" formControlName='id' [formControl]='idControl'/>
+
+          <div class='relative w-10/12 my-5 mx-auto'>
+            <input
+                type="text"
+                id='nom'
+                formControlName='nom'
+                class='border-b w-full outline-none focus:border-b-green-500  peer transition-all' />
+            <p class='absolute top-0 left-0 peer-focus:text-xs peer-focus:-top-4 peer-focus:text-green-500 transition-all peer-valid:-top-4 peer-valid:text-xs' id='inputNom'>Nom</p>
+          </div>
+          <div class='relative w-10/12 my-5 mx-auto'>
+            <input
+                type="text"
+                id='prenom'
+                formControlName='prenom'
+                class='border-b w-full outline-none focus:border-b-green-500  peer transition-all' />
+            <p class='absolute top-0 left-0 peer-focus:text-xs peer-focus:-top-4 peer-focus:text-green-500 transition-all peer-valid:-top-4 peer-valid:text-xs' id='inputPrenom'>Prenom</p>
+          </div>
+
+          <div class='relative w-10/12 my-5 mx-auto'>
+            <p><span>M</span>ention</p>
+            <input type="hidden" id='mention' [formControl]="mentionControl"  />
+            <div class='grid grid-cols-3 gap-2'>
+              <div
+              id='Informatique'
+              (click)="updateMention('Informatique') ; updateStyles()"
+              [ngClass]="{'text-white bg-green-500': selectedMention === 'Informatique' || mentionControl.value === 'Informatique'}"
+              class='shadow-xl mentionchoice rounded-sm flex justify-center items-center h-28 hover:shadow transition cursor-pointer' >
+                Informatique
+              </div>
+              <div
+                id='Management'
+                (click)="updateMention('Management')"
+                [ngClass]="{'text-white bg-green-500': selectedMention === 'Management' || mentionControl.value === 'Management'}"
+                class='shadow-xl mentionchoice rounded-sm flex justify-center items-center h-28 hover:shadow transition cursor-pointer' >
+                Management
+              </div>
+              <div
+                id='Relationspubliqueetmultimedia'
+                (click)="updateMention('Relations publique et multimedia')"
+                [ngClass]="{'text-white bg-green-500': selectedMention === 'Relations publique et multimedia' || mentionControl.value === 'Relations publique et multimedia'}"
+                class='text-wrap text-center shadow-xl mentionchoice rounded-sm flex justify-center items-center h-28 hover:shadow transition cursor-pointer' >
+                Relations Publiques <br /> et <br /> Multimédia
+              </div>
+            </div>
+          </div>
+
+          <div class='relative w-10/12 my-5 mx-auto'>
+            <p><span>N</span>iveau</p>
+            <input type="hidden" id='niveau' [formControl]='niveauControl' />
+            <div class='grid grid-cols-3 gap-2'>
+              <div
+                id='Licence1'
+                (click)="updateNiveau('Licence 1')"
+                [ngClass]="{'text-white bg-green-500': (selectedNiveau === 'Licence 1' || niveauControl.value === 'Licence 1') }"
+              class='shadow-xl niveauchoice rounded-sm flex justify-center items-center h-28 hover:shadow transition cursor-pointer' >
+                Licence 1
+              </div>
+              <div
+                id='Licence2'
+                (click)="updateNiveau('Licence 2')"
+                [ngClass]="{'text-white bg-green-500': (selectedNiveau === 'Licence 2' || niveauControl.value === 'Licence 2')}"
+                class='shadow-xl niveauchoice rounded-sm flex justify-center items-center h-28 hover:shadow transition cursor-pointer' >
+                Licence 2
+              </div>
+              <div
+                id='Licence3'
+                (click)="updateNiveau('Licence 3')"
+                [ngClass]="{'text-white bg-green-500': (selectedNiveau === 'Licence 3' || niveauControl.value === 'Licence 3') && niveauControl.value !== ''}"
+                class='text-wrap text-center shadow-xl niveauchoice rounded-sm flex justify-center items-center h-28 hover:shadow transition cursor-pointer' >
+                Licence 3
+              </div>
+
+              <div
+                id='Master1'
+                (click)="updateNiveau('Master 1')"
+                [ngClass]="{'text-white bg-green-500': (selectedNiveau === 'Master 1' || niveauControl.value === 'Master 1') && niveauControl.value !== ''}"
+                class='shadow-xl niveauchoice rounded-sm flex justify-center items-center h-28 hover:shadow transition cursor-pointer' >
+                Master 1
+              </div>
+              <div
+                id='Master2'
+                (click)="updateNiveau('Master 2')"
+                [ngClass]="{'text-white bg-green-500': (selectedNiveau === 'Master 2' || niveauControl.value === 'Master 2') && niveauControl.value !== '' }"
+                class='shadow-xl niveauchoice rounded-sm flex justify-center items-center h-28 hover:shadow transition cursor-pointer' >
+                Master 2
+              </div>
+            </div>
+          </div>
+
+          <div class='my-5 gap-2  flex justify-center'>
+            <button class='my-5 bg-green-500 hover:bg-green-600 py-2 px-6 text-white' type='submit' >Enregistrer</button>
+            <button class='my-5 bg-red-500 hover:bg-red-600 py-2 px-6 text-white' type="reset" >Effacer</button>
+          </div>
+        </form>
+    </div>
+
+    <div class='w-full'>
+      <h2 class='text-center text-2xl my-5'><span class='font-semibold text-blue-500'>L</span>iste des <span class='font-semibold text-green-500'>E</span>tudiants</h2>
+      <div class='min-h-screen w-11/12 mx-auto shadow-md '>
+        <table class='w-full'>
+          <thead class='font-semibold text-white bg-blue-500'>
+            <tr>
+              <th>ID</th>
+              <th>Nom Complet</th>
+              <th>Mention</th>
+              <th>Niveau</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr *ngFor="let student of students" class='cursor-pointer hover:bg-blue-400 hover:text-white transition-colors' (dblclick)="importToForm(student)">
+              <td class='p-4 text-center'>{{ student.id }}</td>
+              <td class='p-4 text-center'>{{ student.nom }} {{ student.prenom }}</td>
+              <td class='p-4 text-center'>{{ student.mention }}</td>
+              <td class='p-4 text-center'>{{ student.niveau }}</td>
+              <td class='p-4 text-center'>
+                <div class='flex justify-between gap-2'>
+                  <button class=' bg-red-500 hover:bg-red-700 text-white px-4 py-2 cursor-pointer' (click)="deleteStudent(student.id)">
+                    D
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+</div>
